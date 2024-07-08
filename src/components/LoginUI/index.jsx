@@ -1,5 +1,5 @@
 import React, { Fragment, useRef, useState } from 'react'
-import { NavLink,Navigate,Route,Routes } from 'react-router-dom'
+import { NavLink,Navigate,Route,Routes,useNavigate} from 'react-router-dom'
 import './index.scss'
 import uilib from '../../assets/img/ui-lib.png'
 import google from '../../assets/img/google.svg'
@@ -20,14 +20,16 @@ export default function LoginUI() {
 
   const pwdRef = useRef();
 
+  const navigate = useNavigate();
+
   const emailFormatCheck = () => {
     const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     emailRef.current.value == '' ? setEmailCheckState({
-      error: 'error',
+      error: true,
       defaultValue: "Email",
       helperText: "Email is required!"
     }) : emailRegex.test(emailRef.current.value) ? setEmailCheckState({}) : setEmailCheckState({
-      error: 'error',
+      error: true,
       defaultValue: "Email",
       helperText: "Invalid Email address!"
     })
@@ -36,17 +38,25 @@ export default function LoginUI() {
   const pwdFormatCheck = () => {
     const pwdRegex = /^.{7}$/
     pwdRef.current.value === '' ? setPwdCheckState({
-      error: 'error',
+      error: true,
       defaultValue: "Password",
       helperText: "Password is required!"
     }) : pwdRegex.test(pwdRef.current.value) ? setPwdCheckState({}) : setPwdCheckState({
-      error: 'error',
+      error: true,
       defaultValue: "Password",
       helperText: "Password must be 7 character length!"
     })
   }
+  const login =  ()=>{
+    pwdFormatCheck();
+    emailFormatCheck();
+    if(JSON.stringify(pwdCheckState)===JSON.stringify(emailCheckState)&&JSON.stringify(emailCheckState)===JSON.stringify({})){
+      navigate('/main');
+    }
+  }
   return (
     <Fragment>
+      <div className="loginBody"></div>
       <div className='loginBox'>
         <div className="projectInfo">
           <div className="title">
@@ -93,7 +103,7 @@ export default function LoginUI() {
                 textTransform: 'none',
                 fontSize: '14px',
                 fontWeight: '100'
-              }}>Login</LoadingButton>
+              }} onClick={login}>Login</LoadingButton>
             </div>
             <div className="reg">
               Don't have an account?&nbsp;

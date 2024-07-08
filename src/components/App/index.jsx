@@ -6,6 +6,7 @@ import { useRoutes,Navigate } from 'react-router-dom'
 import Login from '../../pages/Login'
 import Register from '../../pages/Register'
 import Pll from '../../pages/Pll'
+import Main from '../../pages/Main';
 function App() {
   const elements = useRoutes([
     {
@@ -20,6 +21,9 @@ function App() {
     },{
         path:'/problemLogin',
         element:<Pll/>
+    },{
+      path:'/main',
+      element:<Main/>
     }
     ])
   return (

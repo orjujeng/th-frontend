@@ -1,0 +1,31 @@
+.asideBox{
+    height: 100%;
+    background-color: #fff;
+    width: 260px;
+    position: fixed;
+    top:0px;
+    left: 0px;
+    background-image: linear-gradient(rgba(34, 42, 69, 0.96), rgba(34, 42, 69, 0.96)),url('../../assets/img/sidebar-bg-dark.jpg');
+    background-size: cover;
+    background-position: center top;
+    box-shadow: rgba(0, 0, 0, 0.06) 0px 5px 5px -3px, rgba(0, 0, 0, 0.043) 0px 8px 10px 1px, rgba(0, 0, 0, 0.035) 0px 3px 14px 2px;
+    display: flex;
+    justify-content: start;
+    align-self: center;
+    flex-direction:column;
+}
+.logo{
+    padding: 20px 18px 20px 29px;
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    flex-direction: row;
+    align-items: center;
+}
+.asideTh{
+    line-height: 1.5;
+    text-transform: none;
+    font-size: 18px;
+    color: rgb(255, 255, 255);
+    margin-left: 15px;
+}
