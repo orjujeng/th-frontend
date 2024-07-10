@@ -1,0 +1,21 @@
+.asideItem{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    padding-left: 29px;
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+    height: 44px;
+    line-height: 44px;
+    width: 100%;
+}
+.asideTitle>span{
+    color: rgb(255, 255, 255);
+    font-size: 18px;
+    padding-right: 10px;
+}
+
+.asideTitle{
+    font-weight: 100;
+    font-size: 0.875rem;
+}
