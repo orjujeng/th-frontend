@@ -13,6 +13,9 @@
     justify-content: start;
     align-self: center;
     flex-direction:column;
+    overflow-y: scroll;
+    scrollbar-width:thin;
+    scrollbar-color: #999 rgba(255,255,255,0);
 }
 .logo{
     padding: 20px 18px 20px 29px;
