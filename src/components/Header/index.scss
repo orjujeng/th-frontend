@@ -1,12 +1,12 @@
-.headerBox{
+.headerBox {
     position: fixed;
-    top:0px;
+    top: 0px;
     left: 0px;
     height: 65px;
     width: 100%;
     padding: 8px 20px 8px 18px;
     background: rgb(255, 255, 255);
-    box-shadow: 0px 1px 10px 5px  gray;
+    box-shadow: 0px 1px 10px 5px gray;
     display: flex;
     flex-direction: row;
     justify-content: end;
@@ -14,7 +14,7 @@
     flex-wrap: nowrap;
 }
 
-.headerNotificateBox{
+.headerNotificateBox {
     height: 40px;
     width: 40px;
     border-radius: 50%;
@@ -24,23 +24,72 @@
     align-items: center;
     cursor: pointer;
     text-align: center;
-    position:relative;
+    position: relative;
+    margin-right: 15px;
 }
 
-.headerNotificateBox:hover{
+.headerNotificateBox:hover {
     background-color: rgba($color: #bdbdbd, $alpha: 0.2);
 }
-.headerWelcomeList{
+
+.headerWelcomeList {
     height: 50px;
-    display: flex;
-    
+    display: flex;  
+
 }
-.headerUsername{
+
+.headerUsername {
     color: rgb(52, 49, 76);
-    font-weight:bold;
-    &::before{
+    font-weight: bold;
+    margin-right: 15px;
+    &::before {
         content: 'Hi ';
-        font-weight:normal;
+        font-weight: normal;
     }
-    
+    &:hover {
+        border-top-left-radius: 50%;
+        border-bottom-left-radius: 50%;
+    }
+}
+// .headerAvatar{
+//     &:hover{
+//         background-color: rgba($color: #bdbdbd, $alpha: 0.2);
+//     }
+// }
+
+.notifcationHeader{
+    height: 65px;
+    background: rgb(255, 255, 255);
+    box-shadow: 0px 1px 10px 5px gray;
+    // width: 250px;
+    display:flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+}
+.notifcationTitle{
+    font-size: 12px;
+    margin-left:10px;
+    font-weight: 500;
+}
+.notifcationContext{
+    width: 100%;
+    margin-top: 10px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+.notificationSubTitle{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-self: center;
+    background-color:rgba(0, 0, 0, 0.02);
+}
+.notificationSubTitleContext{
+    vertical-align: bottom;
+    font-size: 12px;
+}
+
+.notificationSubTitleTime{
+    font-size: 12px;
 }
