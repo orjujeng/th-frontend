@@ -1,0 +1,26 @@
+.mainDrawer{
+    background-color: #fff; 
+    position: absolute;
+    top:60px;
+    // z-index: -1;
+    left: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    width: calc(100% - 310px);
+    margin: 30px;
+
+}
+.dashboardOverview{
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.dashboardTitle{
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: rgb(52, 49, 76);
+}

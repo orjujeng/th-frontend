@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import './index.scss'
 import AsideList from '../AsideList'
-export default function Aside() {
+export default function Aside(props) {
   const [asideContext, setAsideContext] = useState([
     {
       title: null, context: [
@@ -34,7 +34,7 @@ export default function Aside() {
         </div>
         <div className="asideContext">
           {asideContext.map((item) => {
-            return <AsideList title={item.title} context={item.context} />
+            return <AsideList title={item.title} context={item.context}/>
           })}
         </div>
       </div>
