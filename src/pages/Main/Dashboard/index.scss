@@ -1,0 +1,9 @@
+.dashboardWarp{
+    background-color: #fff; 
+    position: absolute;
+    top:60px;
+    left: 260px;
+    height: calc(100% - 60px);
+    width: calc(100% - 260px);
+    z-index: 0;
+}
