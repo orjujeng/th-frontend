@@ -41,3 +41,20 @@
 .dashboradPaperCommon{
     margin-left: 10px;
 }
+.dashboradMemberChartBox{
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    
+}
+.dashboradMemberChartTitle{
+    width: 66px;
+    padding: 16px;
+    background-color:rgba(0, 0, 0, 0.02);
+    width: 100%;
+    line-height: 1.5;
+    text-transform: none;
+    font-weight: 500;
+    color: rgba(52, 49, 76, 0.54);
+}
