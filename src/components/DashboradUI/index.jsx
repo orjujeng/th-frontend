@@ -7,6 +7,8 @@ import PeopleAltSharpIcon from '@mui/icons-material/PeopleAltSharp';
 import SupportSharpIcon from '@mui/icons-material/SupportSharp';
 import AccountTreeSharpIcon from '@mui/icons-material/AccountTreeSharp';
 import PunchClockSharpIcon from '@mui/icons-material/PunchClockSharp';
+import LoginSharpIcon from '@mui/icons-material/LoginSharp';
+import EmojiPeopleSharpIcon from '@mui/icons-material/EmojiPeopleSharp';
 import Box from '@mui/material/Box';
 import ReactEcharts from "echarts-for-react";
 import { useTheme } from "@mui/material/styles";
@@ -17,6 +19,7 @@ export default function DashboardUI() {
   const changeSelectPeriod = (event) => {
     setSelectPeriod(event.target.value);
   };
+
   const option = {
     legend: {
       show: true,
@@ -39,18 +42,18 @@ export default function DashboardUI() {
       fontFamily: theme.typography.fontFamily
     },
     grid: { top: "10%", bottom: "10%", right: "5%" },
-    color: ["rgb(17,82,147)","rgb(71,145,219)","rgb(255,191,95)","rgb(255,91,120)"],
+    color: ["rgb(17,82,147)", "rgb(71,145,219)", "rgb(255,191,95)", "rgb(255,91,120)"],
     barGap: 0.1,
     barMaxWidth: "15px",
     dataset: {
       source: [
-        ["Month", "Website", "App","1","2"],
-        ["Jan", 2200, 1200,1,1],
-        ["Feb", 800, 500,1,1],
-        ["Mar", 700, 1350,1,1],
-        ["Apr", 1500, 1250,1,1],
-        ["May", 2450, 450,1,1],
-        ["June", 1700, 1250,1,1]
+        ["Month", "Team 1", "Team 2", "Team 3", "Team 4"],
+        ["Jan", 2200, 1200, 2200, 1200],
+        ["Feb", 800, 500, 800, 800],
+        ["Mar", 700, 1350, 700, 700],
+        ["Apr", 1500, 1250, 1500, 1500],
+        ["May", 2450, 450, 2450, 2450],
+        ["June", 1700, 1250, 1250, 1250]
       ]
     },
     xAxis: {
@@ -68,15 +71,23 @@ export default function DashboardUI() {
     },
     // Declare several bar series, each will be mapped
     // to a column of dataset.source by default.
-    series: [{ name:"Website",type: "bar",itemStyle: {
-      borderRadius: [10, 10, 0, 0],
-    }}, {  name:"App",type: "bar",itemStyle: {
-      borderRadius: [10, 10, 0, 0],
-    }},{ name:"1",type: "bar",itemStyle: {
-      borderRadius: [10, 10, 0, 0],
-    }},{ name:"2",type: "bar",itemStyle: {
-      borderRadius: [10, 10, 0, 0],
-    } }]
+    series: [{
+      name: "Team 1", type: "bar", itemStyle: {
+        borderRadius: [10, 10, 0, 0],
+      }
+    }, {
+      name: "Team 2", type: "bar", itemStyle: {
+        borderRadius: [10, 10, 0, 0],
+      }
+    }, {
+      name: "Team 3", type: "bar", itemStyle: {
+        borderRadius: [10, 10, 0, 0],
+      }
+    }, {
+      name: "Team 4", type: "bar", itemStyle: {
+        borderRadius: [10, 10, 0, 0],
+      }
+    }]
   };
   return (
     <Fragment>
@@ -167,6 +178,91 @@ export default function DashboardUI() {
               <ReactEcharts style={{ height: '400px' }} option={{ ...option }} />
             </div>
           </Paper>
+        </div>
+        <div className="dashboradDataBox">
+          <div className="dashboardDataSummary">
+            <div className="dashboardDataSummaryRow">
+              <Paper elevation={3} sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems:'center',
+                padding: '20px',
+                width:'50%',
+                marginRight:'20px'
+              }}>
+                <div className="dashboradDataSummaryIcon">
+                <PeopleAltSharpIcon />
+                </div>
+                <div className="dashboradNumber">
+                  48
+                </div>
+                <div className="dashboradTitle">
+                  Team Number
+                </div>
+              </Paper>
+              <Paper elevation={3} sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems:'center',
+                padding: '20px',
+                width:'50%',
+                // flexGrow: '1'
+              }}>
+                <div className="dashboradDataSummaryIcon">
+                <PunchClockSharpIcon />
+                </div>
+                <div className="dashboradNumber">
+                  48
+                </div>
+                <div className="dashboradTitle">
+                  Timesheet Uncomplate
+                </div>
+              </Paper>
+            </div>
+            <div className="dashboardDataSummaryRow">
+            <Paper elevation={3} sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems:'center',
+                padding: '20px',
+                // flexGrow: '1',
+                width:'50%',
+                marginRight:'20px'
+              }}>
+                <div className="dashboradDataSummaryIcon">
+                <EmojiPeopleSharpIcon />
+                </div>
+                <div className="dashboradNumber">
+                  48
+                </div>
+                <div className="dashboradTitle">
+                  Login Member
+                </div>
+              </Paper>
+              <Paper elevation={3} sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems:'center',
+                padding: '20px',
+                width:'50%',
+                // flexGrow: '1'
+              }}>
+                <div className="dashboradDataSummaryIcon">
+                <LoginSharpIcon />
+                </div>
+                <div className="dashboradNumber">
+                  48
+                </div>
+                <div className="dashboradTitle">
+                  Login Times
+                </div>
+              </Paper>
+            </div>
+          </div>
         </div>
       </div>
     </Fragment>
