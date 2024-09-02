@@ -12,14 +12,49 @@ import EmojiPeopleSharpIcon from '@mui/icons-material/EmojiPeopleSharp';
 import Box from '@mui/material/Box';
 import ReactEcharts from "echarts-for-react";
 import { useTheme } from "@mui/material/styles";
-
+import Chart from 'react-apexcharts';
 export default function DashboardUI() {
   const [selectPeriod, setSelectPeriod] = React.useState('202407');
   const theme = useTheme();
   const changeSelectPeriod = (event) => {
     setSelectPeriod(event.target.value);
   };
-
+  const ChartOptions = {
+    chart: {
+      type: 'radialBar',
+    },
+    plotOptions: {
+      radialBar: {
+        startAngle: -120,
+        endAngle: 120,
+        hollow: {
+          // margin: 15,
+          size: '70%',
+        },
+        dataLabels: {
+          name: {
+            fontSize: '24px',
+            fontWeight:'600',
+            color: 'rgb(52, 49, 76)',
+            offsetY: 50,
+           },
+          value: {
+            fontSize: '0',
+            color: 'rgb(52, 49, 76)',
+            offsetY: -5,
+          },
+        },
+      },
+    },
+    fill: {
+      colors: ['rgba(25, 118, 210, 0.85)'],
+    },
+    stroke: {
+      lineCap: 'round',
+      strokeWidth: '100%'
+    },
+    labels: ['84'],
+  };
   const option = {
     legend: {
       show: true,
@@ -186,13 +221,13 @@ export default function DashboardUI() {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
-                alignItems:'center',
+                alignItems: 'center',
                 padding: '20px',
-                width:'50%',
-                marginRight:'20px'
+                width: '50%',
+                marginRight: '20px'
               }}>
                 <div className="dashboradDataSummaryIcon">
-                <PeopleAltSharpIcon />
+                  <PeopleAltSharpIcon />
                 </div>
                 <div className="dashboradNumber">
                   48
@@ -205,13 +240,13 @@ export default function DashboardUI() {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
-                alignItems:'center',
+                alignItems: 'center',
                 padding: '20px',
-                width:'50%',
+                width: '50%',
                 // flexGrow: '1'
               }}>
                 <div className="dashboradDataSummaryIcon">
-                <PunchClockSharpIcon />
+                  <PunchClockSharpIcon />
                 </div>
                 <div className="dashboradNumber">
                   48
@@ -222,18 +257,18 @@ export default function DashboardUI() {
               </Paper>
             </div>
             <div className="dashboardDataSummaryRow">
-            <Paper elevation={3} sx={{
+              <Paper elevation={3} sx={{
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
-                alignItems:'center',
+                alignItems: 'center',
                 padding: '20px',
                 // flexGrow: '1',
-                width:'50%',
-                marginRight:'20px'
+                width: '50%',
+                marginRight: '20px'
               }}>
                 <div className="dashboradDataSummaryIcon">
-                <EmojiPeopleSharpIcon />
+                  <EmojiPeopleSharpIcon />
                 </div>
                 <div className="dashboradNumber">
                   48
@@ -246,13 +281,13 @@ export default function DashboardUI() {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
-                alignItems:'center',
+                alignItems: 'center',
                 padding: '20px',
-                width:'50%',
+                width: '50%',
                 // flexGrow: '1'
               }}>
                 <div className="dashboradDataSummaryIcon">
-                <LoginSharpIcon />
+                  <LoginSharpIcon />
                 </div>
                 <div className="dashboradNumber">
                   48
@@ -262,6 +297,29 @@ export default function DashboardUI() {
                 </div>
               </Paper>
             </div>
+          </div>
+          <div className="dashboardFllowers">
+         
+              <Paper elevation={3} sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+                <div className="dashboardFllowersTitle">Follower Statistics</div>
+                <div className="dashboardFllowersChart">
+                  <Chart options={ChartOptions} series={[75]} type="radialBar" height={350} className='dashboardFllowersChartComp'/>
+                  <div className="dashboardFllowersIcon">
+                    <PeopleAltSharpIcon />
+                </div>
+                <div className="dashboardFllowersAdj">
+                  Awesome
+                </div>
+                <div className="dashboardFllowersDesc">
+                  Close to reach 1000k folowers!
+                </div>
+                </div>  
+              </Paper>
           </div>
         </div>
       </div>

@@ -63,7 +63,7 @@
     flex-direction: row;
     justify-content: space-between;
     margin-top: 25px;
-    
+    flex-grow: 1;
 }
 .dashboardDataSummary{
     display: flex;
@@ -86,4 +86,62 @@
    height: 65px;
    font-size: 24px;
    color:gray;
+}
+.dashboardFllowers{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+    margin-left: 20px;
+}
+.dashboardFllowersTitle{
+    width: 66px;
+    padding: 16px;
+    background-color:rgba(0, 0, 0, 0.02);
+    width: 100%;
+    line-height: 1.5;
+    text-transform: none;
+    font-weight: 500;
+    color: rgba(52, 49, 76, 0.54);
+}
+.dashboardFllowersIcon{
+   width: 40px;
+   padding: 10px;
+   height: 65px;
+   font-size: 24px;
+   color:gray;
+}
+.dashboardFllowersNumber{
+    color: rgb(52, 49, 76);
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+.dashboardFllowersChart{
+    position:relative;
+}
+.dashboardFllowersChartComp{
+    margin: 0 auto;
+}
+.dashboardFllowersIcon{
+    position: absolute;
+    top: calc(50% - 24px);
+    left: calc(50% - 18px);
+}
+.dashboardFllowersAdj{
+    font-size: 14px;
+    line-height: 1.5;
+    text-transform: none;
+    margin-bottom: 8px;
+    text-align: center;
+    font-weight: 800;
+    color: rgb(52, 49, 76);
+}
+.dashboardFllowersDesc{
+    margin-top: 0px;
+    font-size: 14px;
+    text-transform: none;
+    margin-bottom: 24px;
+    text-align: center;
+    color: rgba(52, 49, 76, 0.54);
 }
