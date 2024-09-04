@@ -1,5 +1,5 @@
-.mainDrawer{
-    background-color: #fff; 
+.mainDrawer {
+    background-color: #fff;
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -7,72 +7,83 @@
     width: calc(100% - 60px);
     margin: 30px;
 }
-.dashboardOverview{
+
+.dashboardOverview {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
-.dashboardTitle{
+
+.dashboardTitle {
     font-size: 18px;
     font-weight: 500;
     line-height: 1.5;
     color: rgb(52, 49, 76);
 }
-.dashboardIcon{
-   width: 40px;
-   padding: 10px;
-   height: 65px;
-   font-size: 24px;
-   color:gray;
+
+.dashboardIcon {
+    width: 40px;
+    padding: 10px;
+    height: 65px;
+    font-size: 24px;
+    color: gray;
 }
-.dashboradNumber{
+
+.dashboradNumber {
     color: rgb(52, 49, 76);
     font-size: 32px;
     font-weight: 500;
     line-height: 1.5;
 }
-.dashboradTitle{
+
+.dashboradTitle {
     font-size: 14px;
     text-transform: none;
     margin: 0px;
     color: rgba(52, 49, 76, 0.54);
 }
-.dashboradPaperCommon{
+
+.dashboradPaperCommon {
     margin-left: 10px;
 }
-.dashboradMemberChartBox{
+
+.dashboradMemberChartBox {
     margin-top: 24px;
     display: flex;
     flex-direction: column;
     justify-content: start;
-    
+
 }
-.dashboradMemberChartTitle{
+
+.dashboradMemberChartTitle {
     width: 66px;
     padding: 16px;
-    background-color:rgba(0, 0, 0, 0.02);
+    background-color: rgba(0, 0, 0, 0.02);
     width: 100%;
     line-height: 1.5;
     text-transform: none;
     font-weight: 500;
     color: rgba(52, 49, 76, 0.54);
 }
-.dashboradDataBox{
+
+.dashboradDataBox {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin-top: 25px;
-    flex-grow: 1;
+
 }
-.dashboardDataSummary{
+
+.dashboardDataSummary {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     flex-grow: 1;
-    
+
 }
-.dashboardDataSummaryRow{
+
+.dashboardDataSummaryRow {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -80,55 +91,64 @@
     // width:33%;
     margin-bottom: 25px;
 }
-.dashboradDataSummaryIcon{
-   width: 40px;
-   padding: 10px;
-   height: 65px;
-   font-size: 24px;
-   color:gray;
+
+.dashboradDataSummaryIcon {
+    width: 40px;
+    padding: 10px;
+    height: 65px;
+    font-size: 24px;
+    color: gray;
 }
-.dashboardFllowers{
+
+.dashboardFllowers {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     flex-grow: 1;
     margin-left: 20px;
 }
-.dashboardFllowersTitle{
+
+.dashboardFllowersTitle {
     width: 66px;
     padding: 16px;
-    background-color:rgba(0, 0, 0, 0.02);
+    background-color: rgba(0, 0, 0, 0.02);
     width: 100%;
     line-height: 1.5;
     text-transform: none;
     font-weight: 500;
     color: rgba(52, 49, 76, 0.54);
 }
-.dashboardFllowersIcon{
-   width: 40px;
-   padding: 10px;
-   height: 65px;
-   font-size: 24px;
-   color:gray;
+
+.dashboardFllowersIcon {
+    width: 40px;
+    padding: 10px;
+    height: 65px;
+    font-size: 24px;
+    color: gray;
 }
-.dashboardFllowersNumber{
+
+.dashboardFllowersNumber {
     color: rgb(52, 49, 76);
     font-size: 32px;
     font-weight: 500;
     line-height: 1.5;
 }
-.dashboardFllowersChart{
-    position:relative;
+
+.dashboardFllowersChart {
+    position: relative;
 }
-.dashboardFllowersChartComp{
+
+.dashboardFllowersChartComp {
     margin: 0 auto;
 }
-.dashboardFllowersIcon{
+
+.dashboardFllowersIcon {
     position: absolute;
     top: calc(50% - 24px);
     left: calc(50% - 18px);
 }
-.dashboardFllowersAdj{
+
+.dashboardFllowersAdj {
     font-size: 14px;
     line-height: 1.5;
     text-transform: none;
@@ -137,11 +157,87 @@
     font-weight: 800;
     color: rgb(52, 49, 76);
 }
-.dashboardFllowersDesc{
+
+.dashboardFllowersDesc {
     margin-top: 0px;
     font-size: 14px;
     text-transform: none;
     margin-bottom: 24px;
     text-align: center;
     color: rgba(52, 49, 76, 0.54);
+}
+
+.dashboradChange {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    flex-grow: 1;
+    margin-left: 15px;
+}
+.dashboradLineChart{
+    margin-bottom: 10px;
+}
+.dashboradLineChartTitleBox {
+    font-size: 16px;
+    padding: 16px;
+    background-color: rgba(0, 0, 0, 0.02);
+    width: 100%;
+    line-height: 1.5;
+    text-transform: none;
+    font-weight: 500;
+    color: rgb(52, 49, 76);
+}
+
+.dashboradScatterChartTitle {
+    font-size: 16px;
+    padding: 16px;
+    background-color: rgba(0, 0, 0, 0.02);
+    width: 100%;
+    line-height: 1.5;
+    text-transform: none;
+    font-weight: 500;
+    color: rgb(52, 49, 76);
+}
+
+.dashboradLineChartDesc {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.5;
+    text-transform: none;
+    color: rgba(52, 49, 76, 0.54);
+}
+
+.dashboradLineChartPercent {
+    font-size: 11px;
+    color: rgba(52, 49, 76, 0.54);
+}
+
+.dashboradLineChartTitle {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+
+.dashboradLineChartRange {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+
+.dashboradLineChartPercent {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    flex-wrap: nowrap;
+    margin-top: -9px;
+    margin-left: 5px;
+}
+
+.dashboradLineChartContext {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

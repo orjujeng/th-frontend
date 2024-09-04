@@ -12,6 +12,7 @@ import EmojiPeopleSharpIcon from '@mui/icons-material/EmojiPeopleSharp';
 import Box from '@mui/material/Box';
 import ReactEcharts from "echarts-for-react";
 import { useTheme } from "@mui/material/styles";
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import Chart from 'react-apexcharts';
 export default function DashboardUI() {
   const [selectPeriod, setSelectPeriod] = React.useState('202407');
@@ -34,10 +35,10 @@ export default function DashboardUI() {
         dataLabels: {
           name: {
             fontSize: '24px',
-            fontWeight:'600',
+            fontWeight: '600',
             color: 'rgb(52, 49, 76)',
             offsetY: 50,
-           },
+          },
           value: {
             fontSize: '0',
             color: 'rgb(52, 49, 76)',
@@ -123,6 +124,63 @@ export default function DashboardUI() {
         borderRadius: [10, 10, 0, 0],
       }
     }]
+  };
+  const LineOption = {
+    grid: { top: "10%", bottom: "10%", left: "5%", right: "5%" },
+    legend: {
+      itemGap: 20,
+      icon: "circle",
+      textStyle: {
+        fontSize: 13,
+        color: theme.palette.text.secondary,
+        fontFamily: theme.typography.fontFamily
+      }
+    },
+    label: {
+      fontSize: 13,
+      color: theme.palette.text.secondary,
+      fontFamily: theme.typography.fontFamily
+    },
+    xAxis: {
+      type: "category",
+      data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+      axisLine: { show: false },
+      axisTick: { show: false },
+      axisLabel: {
+        fontSize: 14,
+        fontFamily: "roboto",
+        color: theme.palette.text.secondary
+      }
+    },
+    yAxis: {
+      type: "value",
+      axisLine: { show: false },
+      axisTick: { show: false },
+      splitLine: {
+        lineStyle: { color: theme.palette.text.secondary, opacity: 0.15 }
+      },
+      axisLabel: { color: theme.palette.text.secondary, fontSize: 13, fontFamily: "roboto" }
+    },
+    series: [
+      {
+        data: [30, 40, 20, 50, 40, 80, 90],
+        type: "line",
+        stack: "This month",
+        name: "This month",
+        smooth: true,
+        symbolSize: 4,
+        lineStyle: { width: 4 }
+      },
+      {
+        data: [20, 50, 15, 50, 30, 70, 95],
+        type: "line",
+        stack: "Last month",
+        name: "Last month",
+        smooth: true,
+        symbolSize: 4,
+        lineStyle: { width: 4 }
+      }
+    ]
   };
   return (
     <Fragment>
@@ -299,18 +357,18 @@ export default function DashboardUI() {
             </div>
           </div>
           <div className="dashboardFllowers">
-         
-              <Paper elevation={3} sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-                <div className="dashboardFllowersTitle">Follower Statistics</div>
-                <div className="dashboardFllowersChart">
-                  <Chart options={ChartOptions} series={[75]} type="radialBar" height={350} className='dashboardFllowersChartComp'/>
-                  <div className="dashboardFllowersIcon">
-                    <PeopleAltSharpIcon />
+
+            <Paper elevation={3} sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+              <div className="dashboardFllowersTitle">Follower Statistics</div>
+              <div className="dashboardFllowersChart">
+                <Chart options={ChartOptions} series={[75]} type="radialBar" height={350} className='dashboardFllowersChartComp' />
+                <div className="dashboardFllowersIcon">
+                  <PeopleAltSharpIcon />
                 </div>
                 <div className="dashboardFllowersAdj">
                   Awesome
@@ -318,8 +376,36 @@ export default function DashboardUI() {
                 <div className="dashboardFllowersDesc">
                   Close to reach 1000k folowers!
                 </div>
-                </div>  
+              </div>
+            </Paper>
+          </div>
+          <div className="dashboradChange">
+            <div className="dashboradLineChart">
+              <Paper elevation={3} sx={{
+                // display: 'flex',
+                // flexDirection: 'column',
+                // justifyContent: 'center',
+                // alignItems: 'center',
+              }}>
+                <div className="dashboradLineChartTitleBox">
+                  <div className="dashboradLineChartTitle">
+                    <div className="dashboradLineChartTitleText">Follower Statistics</div>
+                    <div className="dashboradLineChartRange">
+                      <div className="dashboradLineChartNum">860K</div>
+                      <div className="dashboradLineChartPercent">
+                        <ArrowDropUpIcon color="primary" />
+                        <div className="dashboradLineChartPercentNum">+49%</div> 
+                      </div>
+                    </div>
+                  </div>
+                  <div className="dashboradLineChartDesc">System projects</div>
+                </div>
+              <div className="dashboradLineChartContext">
+                <ReactEcharts style={{ height: "400px", width: "800px"}} option={{ ...LineOption, color: [theme.palette.primary.main, theme.palette.primary.light] }}/>
+              </div>
               </Paper>
+            </div>
+            
           </div>
         </div>
       </div>
