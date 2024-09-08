@@ -6,9 +6,10 @@ import google from '../../assets/img/google.svg'
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
 import LoadingButton from '@mui/lab/LoadingButton';
+import {addInfoAction,getInfoAction,clearInfoAction} from '../../redux/action/memberInfoAction'
 // import Button from '@mui/material/Button';
-
-export default function LoginUI() {
+import {connect} from 'react-redux'
+ function LoginUI(props) {
 
   const [emailCheckState, setEmailCheckState] = useState({
   });
@@ -47,11 +48,12 @@ export default function LoginUI() {
       helperText: "Password must be 7 character length!"
     })
   }
-  const login =  ()=>{
+  const login = ()=>{
     pwdFormatCheck();
     emailFormatCheck();
     if(JSON.stringify(pwdCheckState)===JSON.stringify(emailCheckState)&&JSON.stringify(emailCheckState)===JSON.stringify({})){
       navigate('/main');
+      props.addMemberInfo({1:1})
     }
   }
   return (
@@ -121,3 +123,6 @@ export default function LoginUI() {
     </Fragment>
   )
 }
+export default connect(state=>({memberInfo:state}),
+  {getMemberInfo:getInfoAction,addMemberInfo:addInfoAction,clearMemberInfo:clearInfoAction}
+)(LoginUI)

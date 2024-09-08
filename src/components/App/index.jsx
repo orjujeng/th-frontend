@@ -8,6 +8,8 @@ import Register from '../../pages/Register'
 import Pll from '../../pages/Pll'
 import Main from '../../pages/Main';
 import Dashboard from '../../pages/Main/Dashboard';
+import {Provider} from 'react-redux'
+import store from '../../redux/store'
 function App() {
   const elements = useRoutes([
     {
@@ -39,7 +41,9 @@ function App() {
     ])
 return (
   <Fragment>
+    <Provider store={store}>
     {elements}
+    </Provider>
   </Fragment>
 );
 }
