@@ -1,15 +1,17 @@
 import React, { Fragment, useRef, useState } from 'react'
-import { NavLink,Navigate,Route,Routes,useNavigate} from 'react-router-dom'
+import { NavLink, Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import './index.scss'
 import uilib from '../../assets/img/ui-lib.png'
 import google from '../../assets/img/google.svg'
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
 import LoadingButton from '@mui/lab/LoadingButton';
-import {addInfoAction,getInfoAction,clearInfoAction} from '../../redux/action/memberInfoAction'
+import { addInfoAction, getInfoAction, clearInfoAction } from '../../redux/action/memberInfoAction'
+import { loginService} from '../../services/auth'
+import '../../mocks/loginMock'
 // import Button from '@mui/material/Button';
-import {connect} from 'react-redux'
- function LoginUI(props) {
+import { connect } from 'react-redux'
+function LoginUI(props) {
 
   const [emailCheckState, setEmailCheckState] = useState({
   });
@@ -17,6 +19,8 @@ import {connect} from 'react-redux'
   const [pwdCheckState, setPwdCheckState] = useState({
   });
 
+  const [loginButtonState, setloginButtonState] = useState(
+  false);
   const emailRef = useRef();
 
   const pwdRef = useRef();
@@ -29,7 +33,7 @@ import {connect} from 'react-redux'
       error: true,
       defaultValue: "Email",
       helperText: "Email is required!"
-    }) : emailRegex.test(emailRef.current.value) ? setEmailCheckState({}) : setEmailCheckState({
+    }) : emailRegex.test(emailRef.current.value) ? setEmailCheckState({ error: false }) : setEmailCheckState({
       error: true,
       defaultValue: "Email",
       helperText: "Invalid Email address!"
@@ -42,18 +46,74 @@ import {connect} from 'react-redux'
       error: true,
       defaultValue: "Password",
       helperText: "Password is required!"
-    }) : pwdRegex.test(pwdRef.current.value) ? setPwdCheckState({}) : setPwdCheckState({
+    }) : pwdRegex.test(pwdRef.current.value) ? setPwdCheckState({ error: false }) : setPwdCheckState({
       error: true,
       defaultValue: "Password",
       helperText: "Password must be 7 character length!"
     })
   }
-  const login = ()=>{
-    pwdFormatCheck();
-    emailFormatCheck();
-    if(JSON.stringify(pwdCheckState)===JSON.stringify(emailCheckState)&&JSON.stringify(emailCheckState)===JSON.stringify({})){
-      navigate('/main');
-      props.addMemberInfo({1:1})
+
+  const login = () => {
+
+ 
+    let emailIsVaild = false;
+    let pwdIsVaild = false;
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    if (emailRef.current.value == '') {
+      setEmailCheckState({
+        error: true,
+        defaultValue: "Email",
+        helperText: "Email is required!"
+      })
+    } else {
+      if (emailRegex.test(emailRef.current.value)) {
+        setEmailCheckState({ error: false })
+        emailIsVaild = true
+      }
+      else {
+        setEmailCheckState({
+          error: true,
+          defaultValue: "Email",
+          helperText: "Invalid Email address!"
+        })
+      }
+    }
+
+    const pwdRegex = /^.{7}$/
+    if (pwdRef.current.value === '') {
+      setPwdCheckState({
+        error: true,
+        defaultValue: "Password",
+        helperText: "Password is required!"
+      })
+    } else {
+      if (pwdRegex.test(pwdRef.current.value)) {
+        setPwdCheckState({ error: false })
+        pwdIsVaild = true
+      }
+      else {
+        setPwdCheckState({
+          error: true,
+          defaultValue: "Password",
+          helperText: "Password must be 7 character length!"
+        })
+      }
+    }
+
+    if (pwdIsVaild && emailIsVaild) {
+      const param = {
+        password: pwdRef.current.value,
+        email: emailRef.current.value
+      }
+      setloginButtonState(true)
+      loginService(param).then((result)=>{
+        if(result.data.code=='200'){
+          navigate('/main');
+          props.addMemberInfo({ username : result.data.username })
+        }else{
+          setloginButtonState(false)
+        }
+      });
     }
   }
   return (
@@ -101,7 +161,7 @@ import {connect} from 'react-redux'
               </div>
             </div>
             <div className="loginbtnBox">
-              <LoadingButton variant="contained" sx={{
+              <LoadingButton variant="contained" loading={loginButtonState} sx={{
                 textTransform: 'none',
                 fontSize: '14px',
                 fontWeight: '100'
@@ -117,12 +177,12 @@ import {connect} from 'react-redux'
         </div>
       </div>
       <Routes>
-        <Route path='/register' element={<Navigate to="/register" replace/>}/>
-        <Route path='/problemLogin' element={<Navigate to="/problemLogin" replace/>}/>
+        <Route path='/register' element={<Navigate to="/register" replace />} />
+        <Route path='/problemLogin' element={<Navigate to="/problemLogin" replace />} />
       </Routes>
     </Fragment>
   )
 }
-export default connect(state=>({memberInfo:state}),
-  {getMemberInfo:getInfoAction,addMemberInfo:addInfoAction,clearMemberInfo:clearInfoAction}
-)(LoginUI)
+
+export default connect(state => ({ memberInfo: state }),
+  { getMemberInfo: getInfoAction, addMemberInfo: addInfoAction, clearMemberInfo: clearInfoAction })(LoginUI)
