@@ -54,8 +54,6 @@ function LoginUI(props) {
   }
 
   const login = () => {
-
- 
     let emailIsVaild = false;
     let pwdIsVaild = false;
     const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
@@ -185,4 +183,4 @@ function LoginUI(props) {
 }
 
 export default connect(state => ({ memberInfo: state }),
-  { getMemberInfo: getInfoAction, addMemberInfo: addInfoAction, clearMemberInfo: clearInfoAction })(LoginUI)
+  {addMemberInfo: addInfoAction, clearMemberInfo: clearInfoAction })(LoginUI)

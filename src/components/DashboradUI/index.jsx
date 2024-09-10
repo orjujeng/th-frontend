@@ -14,11 +14,14 @@ import ReactEcharts from "echarts-for-react";
 import { useTheme } from "@mui/material/styles";
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import Chart from 'react-apexcharts';
-export default function DashboardUI() {
+import { connect } from 'react-redux'
+import { addInfoAction, clearInfoAction } from '../../redux/action/memberInfoAction'
+function DashboardUI(props) {
   const [selectPeriod, setSelectPeriod] = React.useState('202407');
   const theme = useTheme();
   const changeSelectPeriod = (event) => {
     setSelectPeriod(event.target.value);
+    
   };
   const ChartOptions = {
     chart: {
@@ -412,3 +415,5 @@ export default function DashboardUI() {
     </Fragment>
   )
 }
+export default connect(state => ({ memberInfo: state }),
+{ addMemberInfo: addInfoAction, clearMemberInfo: clearInfoAction })(DashboardUI)

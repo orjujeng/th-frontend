@@ -19,8 +19,10 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import MessageIcon from '@mui/icons-material/Message';
-
-export default function Header() {
+import { addInfoAction, getInfoAction, clearInfoAction } from '../../redux/action/memberInfoAction'
+import { connect } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+function Header(props) {
     const ListButton = styled(Button)(({ theme }) => ({
         color: 'black',
         width: '100%',
@@ -33,7 +35,7 @@ export default function Header() {
     }));
     const headerWelcomeListRef = useRef(null);
     const [notificateCount, SetnotificateCount] = useState(2000);
-    const [username, setUsername] = useState('orjujeng@hotmail.com');
+    const [username, setUsername] = useState(props.memberInfo.username);
     const [anchorEl, setAnchorEl] = useState(null);
     const [notificationStatus, setNotificationStatus] = useState(false);
     const ClientListopen = Boolean(anchorEl);
@@ -43,6 +45,7 @@ export default function Header() {
     const changeListClose = () => {
         setAnchorEl(null);
     };
+    const navigate = useNavigate();
     const notificationDrawerList = (
     <Fragment>
         <div className="notifcationHeader">
@@ -77,6 +80,10 @@ export default function Header() {
         </div>
      </Fragment>
     );
+    const logout =()=>{
+       props.clearMemberInfo()
+       navigate('/')
+    }
     return (
         <Fragment>
             <div className="headerBox">
@@ -96,7 +103,7 @@ export default function Header() {
                     >
                         <div className="headerUsername">{username}</div>
                         <div className="headerAvatar">
-                            <Avatar sx={{ backgroundColor: 'rgba(color: #bdbdbd, alpha: 0.2)' }}>O</Avatar>
+                            <Avatar sx={{ backgroundColor: 'rgba(color: #bdbdbd, alpha: 0.2)' }}>{username==undefined?'':username.charAt(0)}</Avatar>
                         </div>
                     </ListButton>
                     <Menu
@@ -132,7 +139,7 @@ export default function Header() {
                             <ListItemIcon>
                                 <PowerSettingsNewIcon fontSize="small" />
                             </ListItemIcon>
-                            <ListItemText>Logout</ListItemText>
+                            <ListItemText onClick={logout}>Logout </ListItemText>
                         </MenuItem>
                     </Menu>
                 </div>
@@ -140,3 +147,5 @@ export default function Header() {
         </Fragment>
     )
 }
+export default connect(state => ({ memberInfo: state }),
+{ addMemberInfo: addInfoAction, clearMemberInfo: clearInfoAction })(Header)
