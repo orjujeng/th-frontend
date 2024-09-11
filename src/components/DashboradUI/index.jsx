@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment,useEffect} from 'react'
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import './index.scss'
@@ -16,12 +16,28 @@ import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import Chart from 'react-apexcharts';
 import { connect } from 'react-redux'
 import { addInfoAction, clearInfoAction } from '../../redux/action/memberInfoAction'
+import moment from 'moment';
+import {dashboradService} from '../../services/dashborad'
+import '../../mocks/dashborad'
+
 function DashboardUI(props) {
-  const [selectPeriod, setSelectPeriod] = React.useState('202407');
+ 
   const theme = useTheme();
+  const getDate = (minus)=>{
+    return moment().subtract(minus, 'months').year()+'/'+(moment().subtract(minus, 'months').month() + 1)
+  }
+  const [selectPeriod, setSelectPeriod] = React.useState(getDate(0));
+  const [overviewList,setOverviewList]=React.useState([0,0,0,0])
+  useEffect(() => {
+    dashboradService({period:selectPeriod}).then((result)=>{
+      if(result.data.code == 200){
+        setOverviewList([result.data.overview.newMember,result.data.overview.supportMember,result.data.overview.supportProjects,result.data.overview.timesheetCollection])
+      }
+     });
+  }, [selectPeriod]);
+  const [memberNumber,setMemberNumber]=React.useState()
   const changeSelectPeriod = (event) => {
     setSelectPeriod(event.target.value);
-    
   };
   const ChartOptions = {
     chart: {
@@ -197,12 +213,12 @@ function DashboardUI(props) {
               displayEmpty
               inputProps={{ 'aria-label': 'Without label' }}
             >
-              <MenuItem value="202407">
-                <em>This Month</em>
+              <MenuItem value={getDate(0)}>
+                <em>This Month </em>
               </MenuItem>
-              <MenuItem value="202406">Last Month</MenuItem>
-              <MenuItem value="202401">Six Month</MenuItem>
-              <MenuItem value="202307">Last Year</MenuItem>
+              <MenuItem value={getDate(1)}>Last Month</MenuItem>
+              <MenuItem value={getDate(6)}>Six Month</MenuItem>
+              <MenuItem value={getDate(12)}>Last Year</MenuItem>
             </Select>
           </div>
         </div>
@@ -225,7 +241,7 @@ function DashboardUI(props) {
             }}>
               <div className="dashboardIcon"><PeopleAltSharpIcon /></div>
               <div className="dashboradPaperCommon">
-                <div className="dashboradNumber">10,495</div>
+                <div className="dashboradNumber">{overviewList[0]}</div>
                 <div className="dashboradTitle">New Members</div>
               </div>
             </Paper>
@@ -237,7 +253,7 @@ function DashboardUI(props) {
             }}>
               <div className="dashboardIcon"><SupportSharpIcon /></div>
               <div className="dashboradPaperCommon">
-                <div className="dashboradNumber">45,269</div>
+                <div className="dashboradNumber">{overviewList[1]}</div>
                 <div className="dashboradTitle">Support Members</div>
               </div>
             </Paper>
@@ -248,7 +264,7 @@ function DashboardUI(props) {
             }}>
               <div className="dashboardIcon"><AccountTreeSharpIcon /></div>
               <div className="dashboradPaperCommon">
-                <div className="dashboradNumber">20,965</div>
+                <div className="dashboradNumber">{overviewList[2]}</div>
                 <div className="dashboradTitle">Support Projects</div>
               </div>
             </Paper>
@@ -259,7 +275,7 @@ function DashboardUI(props) {
             }}>
               <div className="dashboardIcon"><PunchClockSharpIcon /></div>
               <div className="dashboradPaperCommon">
-                <div className="dashboradNumber">20,965</div>
+                <div className="dashboradNumber">{overviewList[3]}</div>
                 <div className="dashboradTitle">Timesheet Collection</div>
               </div>
             </Paper>

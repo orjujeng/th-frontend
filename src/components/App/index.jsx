@@ -16,9 +16,6 @@ function App() {
       path: '/Login',
       element: <Login />
     }, {
-      path: '/',
-      element: <Navigate to='/Login' />
-    }, {
       path: '/register',
       element: <Register />
     }, {
@@ -37,7 +34,10 @@ function App() {
           element:<Dashboard/>
         }
       ]
-    }
+    },{
+      path: '/*',
+      element: <Navigate to='/Login' />
+    }, 
     ])
 return (
   <Fragment>
