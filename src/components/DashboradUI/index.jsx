@@ -1,4 +1,4 @@
-import React, { Fragment,useEffect} from 'react'
+import React, { Fragment, useEffect } from 'react'
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import './index.scss'
@@ -17,25 +17,34 @@ import Chart from 'react-apexcharts';
 import { connect } from 'react-redux'
 import { addInfoAction, clearInfoAction } from '../../redux/action/memberInfoAction'
 import moment from 'moment';
-import {dashboradService} from '../../services/dashborad'
+import { dashboradService } from '../../services/dashborad'
 import '../../mocks/dashborad'
 
 function DashboardUI(props) {
- 
+
   const theme = useTheme();
-  const getDate = (minus)=>{
-    return moment().subtract(minus, 'months').year()+'/'+(moment().subtract(minus, 'months').month() + 1)
+  const getDate = (minus) => {
+    return moment().subtract(minus, 'months').year() + '/' + (moment().subtract(minus, 'months').month() + 1)
   }
   const [selectPeriod, setSelectPeriod] = React.useState(getDate(0));
-  const [overviewList,setOverviewList]=React.useState([0,0,0,0])
+  const [overviewList, setOverviewList] = React.useState([0, 0, 0, 0])
+  const [followNumber, setFollowNumber] = React.useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   useEffect(() => {
-    dashboradService({period:selectPeriod}).then((result)=>{
-      if(result.data.code == 200){
-        setOverviewList([result.data.overview.newMember,result.data.overview.supportMember,result.data.overview.supportProjects,result.data.overview.timesheetCollection])
+    dashboradService({ period: selectPeriod }).then((result) => {
+      if (result.data.code == 200) {
+        setOverviewList([result.data.overview.newMember, result.data.overview.supportMember, result.data.overview.supportProjects, result.data.overview.timesheetCollection])
+        setOtherInfo([result.data.otherInfo.uncomplate,
+        result.data.otherInfo.loginMember,
+        result.data.otherInfo.loginTimes])
+        setMemberNumber(
+          result.data.memberNumber
+        )
+        setFollowNumber(result.data.followNumber)
       }
-     });
+    });
   }, [selectPeriod]);
-  const [memberNumber,setMemberNumber]=React.useState()
+  const [memberNumber, setMemberNumber] = React.useState([])
+  const [otherInfo, setOtherInfo] = React.useState([0, 0, 0])
   const changeSelectPeriod = (event) => {
     setSelectPeriod(event.target.value);
   };
@@ -73,9 +82,10 @@ function DashboardUI(props) {
       lineCap: 'round',
       strokeWidth: '100%'
     },
-    labels: ['84'],
+    labels: [overviewList[1]],
   };
-  const option = {
+
+  const teamOption = {
     legend: {
       show: true,
       itemGap: 20,
@@ -101,15 +111,7 @@ function DashboardUI(props) {
     barGap: 0.1,
     barMaxWidth: "15px",
     dataset: {
-      source: [
-        ["Month", "Team 1", "Team 2", "Team 3", "Team 4"],
-        ["Jan", 2200, 1200, 2200, 1200],
-        ["Feb", 800, 500, 800, 800],
-        ["Mar", 700, 1350, 700, 700],
-        ["Apr", 1500, 1250, 1500, 1500],
-        ["May", 2450, 450, 2450, 2450],
-        ["June", 1700, 1250, 1250, 1250]
-      ]
+      source: memberNumber
     },
     xAxis: {
       type: "category",
@@ -162,7 +164,7 @@ function DashboardUI(props) {
     },
     xAxis: {
       type: "category",
-      data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+      data: [getDate(11), getDate(10), getDate(9), getDate(8), getDate(7), getDate(6), getDate(5), getDate(4), getDate(3), getDate(2), getDate(1), getDate(0)],
       axisLine: { show: false },
       axisTick: { show: false },
       axisLabel: {
@@ -181,20 +183,20 @@ function DashboardUI(props) {
       axisLabel: { color: theme.palette.text.secondary, fontSize: 13, fontFamily: "roboto" }
     },
     series: [
+      // {
+      //   data: [30, 40, 20, 50, 40, 80, 90],
+      //   type: "line",
+      //   stack: "This month",
+      //   name: "This month",
+      //   smooth: true,
+      //   symbolSize: 4,
+      //   lineStyle: { width: 4 }
+      // },
       {
-        data: [30, 40, 20, 50, 40, 80, 90],
+        data: followNumber,
         type: "line",
-        stack: "This month",
-        name: "This month",
-        smooth: true,
-        symbolSize: 4,
-        lineStyle: { width: 4 }
-      },
-      {
-        data: [20, 50, 15, 50, 30, 70, 95],
-        type: "line",
-        stack: "Last month",
-        name: "Last month",
+        stack: "Last 12 Months",
+        name: "Last 12 Months",
         smooth: true,
         symbolSize: 4,
         lineStyle: { width: 4 }
@@ -287,7 +289,7 @@ function DashboardUI(props) {
               Member Statistics
             </div>
             <div className="dashboradMemberChart">
-              <ReactEcharts style={{ height: '400px' }} option={{ ...option }} />
+              <ReactEcharts style={{ height: '400px' }} option={{ ...teamOption }} />
             </div>
           </Paper>
         </div>
@@ -307,7 +309,7 @@ function DashboardUI(props) {
                   <PeopleAltSharpIcon />
                 </div>
                 <div className="dashboradNumber">
-                  48
+                  {overviewList[1]}
                 </div>
                 <div className="dashboradTitle">
                   Team Number
@@ -326,7 +328,7 @@ function DashboardUI(props) {
                   <PunchClockSharpIcon />
                 </div>
                 <div className="dashboradNumber">
-                  48
+                  {otherInfo[0]}
                 </div>
                 <div className="dashboradTitle">
                   Timesheet Uncomplate
@@ -348,7 +350,7 @@ function DashboardUI(props) {
                   <EmojiPeopleSharpIcon />
                 </div>
                 <div className="dashboradNumber">
-                  48
+                  {otherInfo[1]}
                 </div>
                 <div className="dashboradTitle">
                   Login Member
@@ -367,7 +369,7 @@ function DashboardUI(props) {
                   <LoginSharpIcon />
                 </div>
                 <div className="dashboradNumber">
-                  48
+                  {otherInfo[2]}
                 </div>
                 <div className="dashboradTitle">
                   Login Times
@@ -385,7 +387,7 @@ function DashboardUI(props) {
             }}>
               <div className="dashboardFllowersTitle">Follower Statistics</div>
               <div className="dashboardFllowersChart">
-                <Chart options={ChartOptions} series={[75]} type="radialBar" height={350} className='dashboardFllowersChartComp' />
+                <Chart options={ChartOptions} series={[overviewList[1] / 60 * 100]} type="radialBar" height={350} className='dashboardFllowersChartComp' />
                 <div className="dashboardFllowersIcon">
                   <PeopleAltSharpIcon />
                 </div>
@@ -410,21 +412,21 @@ function DashboardUI(props) {
                   <div className="dashboradLineChartTitle">
                     <div className="dashboradLineChartTitleText">Follower Statistics</div>
                     <div className="dashboradLineChartRange">
-                      <div className="dashboradLineChartNum">860K</div>
+                      <div className="dashboradLineChartNum">{followNumber[followNumber.length-1]-followNumber[followNumber.length-2]}</div>
                       <div className="dashboradLineChartPercent">
                         <ArrowDropUpIcon color="primary" />
-                        <div className="dashboradLineChartPercentNum">+49%</div> 
+                        <div className="dashboradLineChartPercentNum">{(followNumber[followNumber.length-1]-followNumber[followNumber.length-2]/followNumber[followNumber.length-2])+'%'}</div>
                       </div>
                     </div>
                   </div>
                   <div className="dashboradLineChartDesc">System projects</div>
                 </div>
-              <div className="dashboradLineChartContext">
-                <ReactEcharts style={{ height: "400px", width: "800px"}} option={{ ...LineOption, color: [theme.palette.primary.main, theme.palette.primary.light] }}/>
-              </div>
+                <div className="dashboradLineChartContext">
+                  <ReactEcharts style={{ height: "400px", width: "800px" }} option={{ ...LineOption, color: [theme.palette.primary.main, theme.palette.primary.light] }} />
+                </div>
               </Paper>
             </div>
-            
+
           </div>
         </div>
       </div>
@@ -432,4 +434,4 @@ function DashboardUI(props) {
   )
 }
 export default connect(state => ({ memberInfo: state }),
-{ addMemberInfo: addInfoAction, clearMemberInfo: clearInfoAction })(DashboardUI)
+  { addMemberInfo: addInfoAction, clearMemberInfo: clearInfoAction })(DashboardUI)

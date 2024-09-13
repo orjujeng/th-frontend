@@ -9,27 +9,12 @@ Mock.mock('/dashborad', 'get', {
             supportProjects: 4,
             timesheetCollection:2
         },
-        memberNumber: {
-            Sep: {
-               Team1:10,
-               Team2:15,
-               Team3:20,
-               Team4:25
-            }
-        },
+        memberNumber: [["Month", "Team 1", "Team 2", "Team 3", "Team 4"],["Sep",10,15,20,25],["Aug",9,8,17,20],["July",9,8,17,20]],
         otherInfo:{
             uncomplate:10,
             loginMember:20,
             loginTimes:100
         },
-        followNumber:{
-            9:50,
-            8:50,
-            7:50,
-            6:50,
-            5:50,
-            4:50,
-            3:50
-        }
+        followNumber:[12,13,14,15,17,18,19,20,21,22,23,24]
     }
 })
