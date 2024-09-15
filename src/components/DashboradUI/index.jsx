@@ -18,17 +18,18 @@ import { connect } from 'react-redux'
 import { addInfoAction, clearInfoAction } from '../../redux/action/memberInfoAction'
 import moment from 'moment';
 import { dashboradService } from '../../services/dashborad'
-import '../../mocks/dashborad'
-
-function DashboardUI(props) {
+import {useOutletContext } from 'react-router-dom';
+// import '../../mocks/dashborad'
+function DashboardUI() {
 
   const theme = useTheme();
   const getDate = (minus) => {
     return moment().subtract(minus, 'months').year() + '/' + (moment().subtract(minus, 'months').month() + 1)
   }
   const [selectPeriod, setSelectPeriod] = React.useState(getDate(0));
-  const [overviewList, setOverviewList] = React.useState([0, 0, 0, 0])
+  const [overviewList, setOverviewList] = React.useState(["-", "-", "-", "-"])
   const [followNumber, setFollowNumber] = React.useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+  const { setMainMsgPopup } = useOutletContext();
   useEffect(() => {
     dashboradService({ period: selectPeriod }).then((result) => {
       if (result.data.code == 200) {
@@ -41,10 +42,12 @@ function DashboardUI(props) {
         )
         setFollowNumber(result.data.followNumber)
       }
+    }).catch(error=>{
+      setMainMsgPopup({vertical:'top', horizontal:'right',open:true,msg:'Network with Issue,Please Try again later'});
     });
   }, [selectPeriod]);
   const [memberNumber, setMemberNumber] = React.useState([])
-  const [otherInfo, setOtherInfo] = React.useState([0, 0, 0])
+  const [otherInfo, setOtherInfo] = React.useState(["-", "-", "-"])
   const changeSelectPeriod = (event) => {
     setSelectPeriod(event.target.value);
   };
@@ -203,9 +206,11 @@ function DashboardUI(props) {
       }
     ]
   };
+  
   return (
     <Fragment>
       <div className="mainDrawer">
+      
         <div className="dashboardOverview">
           <div className="dashboardTitle">Overview</div>
           <div className="dashboardPeriod">

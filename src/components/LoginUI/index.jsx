@@ -6,21 +6,22 @@ import google from '../../assets/img/google.svg'
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { addInfoAction, getInfoAction, clearInfoAction } from '../../redux/action/memberInfoAction'
-import { loginService} from '../../services/auth'
+import Snackbar from '@mui/material/Snackbar';
+import { addInfoAction, clearInfoAction } from '../../redux/action/memberInfoAction'
+import { loginService } from '../../services/auth'
 import '../../mocks/loginMock'
-// import Button from '@mui/material/Button';
 import { connect } from 'react-redux'
 function LoginUI(props) {
 
   const [emailCheckState, setEmailCheckState] = useState({
   });
-
+  const [msgPopUp,setmsgPopup] = useState({vertical:'top', horizontal:'right',open:false,msg:''})
+  const { vertical, horizontal, open } = msgPopUp;
   const [pwdCheckState, setPwdCheckState] = useState({
   });
 
   const [loginButtonState, setloginButtonState] = useState(
-  false);
+    false);
   const emailRef = useRef();
 
   const pwdRef = useRef();
@@ -29,7 +30,7 @@ function LoginUI(props) {
 
   const emailFormatCheck = () => {
     const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-    emailRef.current.value == '' ? setEmailCheckState({
+    emailRef.current.value === '' ? setEmailCheckState({
       error: true,
       defaultValue: "Email",
       helperText: "Email is required!"
@@ -57,7 +58,7 @@ function LoginUI(props) {
     let emailIsVaild = false;
     let pwdIsVaild = false;
     const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-    if (emailRef.current.value == '') {
+    if (emailRef.current.value === '') {
       setEmailCheckState({
         error: true,
         defaultValue: "Email",
@@ -104,15 +105,23 @@ function LoginUI(props) {
         email: emailRef.current.value
       }
       setloginButtonState(true)
-      loginService(param).then((result)=>{
-        if(result.data.code=='200'){
+      loginService(param).then((result) => {
+      
+        if (result.data.code == '200') {
+    
           navigate('/main');
-          props.addMemberInfo({ username : result.data.username })
-        }else{
+          props.addMemberInfo({ username: result.data.username })
+        } else {
           setloginButtonState(false)
         }
+      }).catch((error) => {
+        setmsgPopup({vertical:'top', horizontal:'right',open:true,msg:'Network with Issue,Please Try again later'})
+        setloginButtonState(false)
       });
     }
+  }
+  const msgPopupClose = ()=>{
+    setmsgPopup({vertical:'top', horizontal:'right',open:false,msg:''})
   }
   return (
     <Fragment>
@@ -120,7 +129,7 @@ function LoginUI(props) {
       <div className='loginBox'>
         <div className="projectInfo">
           <div className="title">
-            <span class="iconfont">&#xe76a;</span>
+            <span className="iconfont">&#xe76a;</span>
             <span className='projectName'>TimeSheet</span>
           </div>
           <div className="desc">TimeSheet Dashboard</div>
@@ -178,9 +187,16 @@ function LoginUI(props) {
         <Route path='/register' element={<Navigate to="/register" replace />} />
         <Route path='/problemLogin' element={<Navigate to="/problemLogin" replace />} />
       </Routes>
+      <Snackbar
+        anchorOrigin={{ vertical, horizontal}}
+        open={open}
+        autoHideDuration={5000}
+        message={msgPopUp.msg}
+        onClose={msgPopupClose}
+      />
     </Fragment>
   )
 }
 
 export default connect(state => ({ memberInfo: state }),
-  {addMemberInfo: addInfoAction, clearMemberInfo: clearInfoAction })(LoginUI)
+  { addMemberInfo: addInfoAction, clearMemberInfo: clearInfoAction })(LoginUI)

@@ -4,11 +4,11 @@ import Aside from '../../components/Aside'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import { connect } from 'react-redux'
-import { useEffect,useState } from 'react';
+import { useEffect } from 'react';
 import { addInfoAction, clearInfoAction } from '../../redux/action/memberInfoAction'
 import { useNavigate } from 'react-router-dom'
-import { dashboradService } from '../../services/dashborad'
 import '../../mocks/dashborad'
+import Snackbar from '@mui/material/Snackbar';
 function Main(props) {
     const navigate = useNavigate();
     // const [period,setPeriod]=useState();
@@ -16,13 +16,30 @@ function Main(props) {
     useEffect(() => {
         if (username === undefined) {
             navigate('/')
-        } }
-    ,[username, navigate])
+        }else{
+            setmsgPopup({ vertical: 'top', horizontal: 'right', open: true, msg: 'Login Successful' })
+        }
+        
+    }
+    , [username, navigate])
+    const [msgPopUp, setmsgPopup] = React.useState({ vertical: 'top', horizontal: 'right', open: false, msg: '' });
+    const { vertical, horizontal, open } = msgPopUp;
+
+    const msgPopupClose = () => {
+        setmsgPopup({ vertical: 'top', horizontal: 'right', open: false, msg: '' })
+    }
     return (
         <Fragment>
-            <Header/>
+            <Snackbar
+                anchorOrigin={{ vertical, horizontal }}
+                open={open}
+                autoHideDuration={5000}
+                message={msgPopUp.msg}
+                onClose={msgPopupClose}
+            />
+            <Header />
             <Aside />
-            <Outlet />
+            <Outlet context={{ setMainMsgPopup: setmsgPopup }}/>
             <Footer />
         </Fragment>
     )

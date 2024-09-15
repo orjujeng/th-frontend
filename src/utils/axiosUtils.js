@@ -6,7 +6,7 @@ export const HttpsGet = (requestUrl, param) => {
                 resolve(response.data); 
             })
             .catch(error => {
-                reject(error); 
+                reject(error)
             })});
     }
 
