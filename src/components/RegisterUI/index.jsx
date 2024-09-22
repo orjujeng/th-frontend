@@ -2,7 +2,8 @@ import React from 'react'
 import { Fragment, useRef, useState } from 'react'
 import { NavLink,Navigate,Route,Routes } from 'react-router-dom'
 import './index.scss'
-
+import { regService } from '../../services/auth';
+import Snackbar from '@mui/material/Snackbar';
 import google from '../../assets/img/google.svg'
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
@@ -11,9 +12,10 @@ import deviceimg from '../../assets/img/posting_photo.svg'
 export default function RegisterUI() {
   const [emailCheckState, setEmailCheckState] = useState({
   });
-
+  const [regButtonState, setRegButtonState] = useState(false);
   const emailRef = useRef();
-
+  const [msgPopUp,setmsgPopup] = useState({vertical:'top', horizontal:'right',open:false,msg:''})
+  const { vertical, horizontal, open } = msgPopUp;
   const emailFormatCheck = () => {
     const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     emailRef.current.value == '' ? setEmailCheckState({
@@ -26,6 +28,54 @@ export default function RegisterUI() {
       helperText: "Invalid Email address!"
     })
   }
+  const reg = () => {
+    let emailVaild = false
+
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    if (emailRef.current.value == '') {
+      setEmailCheckState({
+        error: 'error',
+        defaultValue: "Email",
+        helperText: "Email is required!"
+      })
+    } else {
+      if (emailRegex.test(emailRef.current.value)) {
+        setEmailCheckState({})
+        emailVaild = true
+      } else {
+        setEmailCheckState({
+          error: 'error',
+          defaultValue: "Email",
+          helperText: "Invalid Email address!"
+        })
+      }
+    }
+    if (emailVaild) {
+      const param = {
+        email: emailRef.current.value
+      }
+      setRegButtonState(true)
+      regService(JSON.stringify(param)).then((result) => {
+
+        if (result.data.code == '200') {
+          setmsgPopup({ vertical: 'top', horizontal: 'right', open: true, msg: 'Successful' })
+          setRegButtonState(false);
+        } else if (result.data.code != '200') {
+          setmsgPopup({ vertical: 'top', horizontal: 'right', open: true, msg: 'User is Exsiting' })
+          setRegButtonState(false);
+        } else {
+          setRegButtonState(false)
+        }
+      }).catch((error) => {
+        setmsgPopup({ vertical: 'top', horizontal: 'right', open: true, msg: 'Network with Issue,Please Try again later' })
+        setRegButtonState(false)
+      });
+    
+  } 
+}
+const msgPopupClose = () => {
+  setmsgPopup({ vertical: 'top', horizontal: 'right', open: false, msg: '' })
+}
   return (
     <Fragment>
       <div className='loginBox'>
@@ -58,7 +108,7 @@ export default function RegisterUI() {
                 textTransform: 'none',
                 fontSize: '14px',
                 fontWeight: '100'
-              }}>Register</LoadingButton>
+              }} onClick={reg}>Register</LoadingButton>
             </div>
             <div className="reg">
               Already have an account?&nbsp;
@@ -72,6 +122,14 @@ export default function RegisterUI() {
       <Routes>
         <Route path='/Login' element={<Navigate to="/Login" replace/>}/>
       </Routes>
+      <Snackbar
+        anchorOrigin={{ vertical, horizontal}}
+        open={open}
+        autoHideDuration={5000}
+        message={msgPopUp.msg}
+        onClose={msgPopupClose}
+      />
     </Fragment>
+    
   )
 }

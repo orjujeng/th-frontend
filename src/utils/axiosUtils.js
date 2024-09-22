@@ -1,7 +1,10 @@
 import axios from "axios";
 export const HttpsGet = (requestUrl, param) => {
     return new Promise((resolve, reject) => {
-        axios.get(requestUrl,param)
+        axios.post(requestUrl,param,{
+            headers: {
+                'Content-Type': 'application/json',
+            }})
             .then(response => {
                 resolve(response.data); 
             })
@@ -12,7 +15,9 @@ export const HttpsGet = (requestUrl, param) => {
 
 export const HttpsPost = (requestUrl, param) => {
         return new Promise((resolve, reject) => {
-            axios.post(requestUrl,param)
+            axios.post(requestUrl,param,{headers: {
+                'Content-Type': 'application/json',
+            }})
                 .then(response => {
                     
                     resolve(response.data); 

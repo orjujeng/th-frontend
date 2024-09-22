@@ -9,7 +9,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import Snackbar from '@mui/material/Snackbar';
 import { addInfoAction, clearInfoAction } from '../../redux/action/memberInfoAction'
 import { loginService } from '../../services/auth'
-import '../../mocks/loginMock'
+// import '../../mocks/loginMock'
 import { connect } from 'react-redux'
 function LoginUI(props) {
 
@@ -105,12 +105,15 @@ function LoginUI(props) {
         email: emailRef.current.value
       }
       setloginButtonState(true)
-      loginService(param).then((result) => {
+      loginService(JSON.stringify(param)).then((result) => {
       
         if (result.data.code == '200') {
     
           navigate('/main');
           props.addMemberInfo({ username: result.data.username })
+        } else if (result.data.code != '200'){
+          setmsgPopup({vertical:'top', horizontal:'right',open:true,msg:'User not exsiting or passwrod wrong'})
+          setloginButtonState(false);
         } else {
           setloginButtonState(false)
         }
