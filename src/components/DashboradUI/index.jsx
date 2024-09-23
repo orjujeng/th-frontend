@@ -32,11 +32,13 @@ function DashboardUI() {
   const { setMainMsgPopup } = useOutletContext();
   useEffect(() => {
     dashboradService({ period: selectPeriod }).then((result) => {
-      if (result.data.code == 200) {
+      
+      if (result.data.code == '200') {
         setOverviewList([result.data.overview.newMember, result.data.overview.supportMember, result.data.overview.supportProjects, result.data.overview.timesheetCollection])
-        setOtherInfo([result.data.otherInfo.uncomplate,
-        result.data.otherInfo.loginMember,
-        result.data.otherInfo.loginTimes])
+        setOtherInfo([result.data.otherinfo.uncomplate,
+        result.data.otherinfo.loginMember,
+        result.data.otherinfo.loginTimes])
+  
         setMemberNumber(
           result.data.memberNumber
         )
@@ -392,7 +394,7 @@ function DashboardUI() {
             }}>
               <div className="dashboardFllowersTitle">Follower Statistics</div>
               <div className="dashboardFllowersChart">
-                <Chart options={ChartOptions} series={[overviewList[1] / 60 * 100]} type="radialBar" height={350} className='dashboardFllowersChartComp' />
+                <Chart options={ChartOptions} series={[overviewList[1] / 1000 * 100]} type="radialBar" height={350} className='dashboardFllowersChartComp' />
                 <div className="dashboardFllowersIcon">
                   <PeopleAltSharpIcon />
                 </div>
@@ -417,10 +419,10 @@ function DashboardUI() {
                   <div className="dashboradLineChartTitle">
                     <div className="dashboradLineChartTitleText">Follower Statistics</div>
                     <div className="dashboradLineChartRange">
-                      <div className="dashboradLineChartNum">{followNumber[followNumber.length-1]-followNumber[followNumber.length-2]}</div>
+                      <div className="dashboradLineChartNum">{followNumber[followNumber.length-1]-followNumber[followNumber.length-12]}</div>
                       <div className="dashboradLineChartPercent">
                         <ArrowDropUpIcon color="primary" />
-                        <div className="dashboradLineChartPercentNum">{(followNumber[followNumber.length-1]-followNumber[followNumber.length-2]/followNumber[followNumber.length-2])+'%'}</div>
+                        <div className="dashboradLineChartPercentNum">{(followNumber[followNumber.length-1]-followNumber[followNumber.length-12]/followNumber[followNumber.length-12])+'%'}</div>
                       </div>
                     </div>
                   </div>
